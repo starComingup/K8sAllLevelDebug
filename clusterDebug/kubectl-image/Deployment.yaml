@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "kubectl-random"
+  namespace: "kube-system"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      "kubernetes.io/os": "linux"
+  template:
+    metadata:
+      labels:
+        "kubernetes.io/os": "linux"
+    spec:
+      containers:
+        - name: "kubectl"
+          image: "kubectl:image"  ## replace this
+          volumeMounts:
+            - mountPath: "/etc/localtime"
+              name: "host-time"
+      serviceAccount: "default"
+      volumes:
+        - name: "host-time"
+          hostPath:
+            path: "/etc/localtime"
+  
+
+  
+          
